@@ -1,0 +1,470 @@
+{
+  "name": "Clay Scored Account to HubSpot (v2)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "clay-scored-account",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "w2-0001-clay-webhook",
+      "name": "Clay Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "26a7f877-0867-4f89-8b0b-3bce6d7897d8",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_HEADER_AUTH_CREDENTIAL_ID",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "icp-a",
+              "leftValue": "={{ $json.body.tier }}",
+              "rightValue": "A",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "icp-b",
+              "leftValue": "={{ $json.body.tier }}",
+              "rightValue": "B",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "w2-0002-is-icp",
+      "name": "Tier A or B?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'skipped', reason: 'tier not in A or B', name: $json.body.name } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "w2-0003-respond-skipped",
+      "name": "Respond: skipped",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "company",
+        "operation": "searchByDomain",
+        "domain": "={{ $json.body.domain }}",
+        "limit": 1,
+        "returnAll": false,
+        "authentication": "appToken",
+        "options": {}
+      },
+      "id": "w2-0010-find-company",
+      "name": "Find company by domain",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        600,
+        420
+      ],
+      "alwaysOutputData": true,
+      "onError": "stopWorkflow",
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "REPLACE_WITH_HUBSPOT_CREDENTIAL_ID",
+          "name": "HubSpot Service Key account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "dup-check",
+              "leftValue": "={{ $json.companyId }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "w2-0011-already-in-hubspot",
+      "name": "Already in HubSpot?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        820,
+        420
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'duplicate', hubspot_company_id: $json.companyId } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "w2-0012-respond-duplicate",
+      "name": "Respond: duplicate",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "tier-a",
+              "leftValue": "={{ $('Clay Webhook').item.json.body.tier }}",
+              "rightValue": "A",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "w2-0004-is-tier-a",
+      "name": "Tier A?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        720,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "company",
+        "operation": "create",
+        "authentication": "appToken",
+        "name": "={{ $('Clay Webhook').item.json.body.name }}",
+        "additionalFields": {
+          "companyDomainName": "={{ $('Clay Webhook').item.json.body.domain }}",
+          "city": "={{ $('Clay Webhook').item.json.body.city }}",
+          "stateRegion": "={{ $('Clay Webhook').item.json.body.state }}"
+        }
+      },
+      "id": "w2-0005-company-a",
+      "name": "HubSpot: Company (Tier A)",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        960,
+        140
+      ],
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "REPLACE_WITH_HUBSPOT_CREDENTIAL_ID",
+          "name": "HubSpot Service Key account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/deals",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "hubspotAppToken",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { properties: { dealname: 'Pump: ' + $('Clay Webhook').item.json.body.name, pipeline: 'default', dealstage: 'appointmentscheduled' }, associations: [ { to: { id: String($json.companyId) }, types: [ { associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 5 } ] } ] } }}",
+        "options": {}
+      },
+      "id": "w2-0006-deal-a",
+      "name": "HubSpot: Deal via API (Tier A)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        140
+      ],
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "REPLACE_WITH_HUBSPOT_CREDENTIAL_ID",
+          "name": "HubSpot Service Key account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'created', tier: 'A', name: $('Clay Webhook').item.json.body.name } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "w2-0007-respond-a",
+      "name": "Respond: Tier A created",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "company",
+        "operation": "create",
+        "authentication": "appToken",
+        "name": "={{ $('Clay Webhook').item.json.body.name }}",
+        "additionalFields": {
+          "companyDomainName": "={{ $('Clay Webhook').item.json.body.domain }}",
+          "city": "={{ $('Clay Webhook').item.json.body.city }}",
+          "stateRegion": "={{ $('Clay Webhook').item.json.body.state }}"
+        }
+      },
+      "id": "w2-0008-company-b",
+      "name": "HubSpot: Company (Tier B)",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [
+        960,
+        360
+      ],
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "REPLACE_WITH_HUBSPOT_CREDENTIAL_ID",
+          "name": "HubSpot Service Key account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'created', tier: 'B', name: $('Clay Webhook').item.json.body.name } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "w2-0009-respond-b",
+      "name": "Respond: Tier B created",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1200,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'error', message: 'HubSpot write failed', name: $('Clay Webhook').item.json.body.name } }}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "id": "w2-0013-respond-error",
+      "name": "Respond: HubSpot error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1200,
+        520
+      ]
+    }
+  ],
+  "connections": {
+    "Clay Webhook": {
+      "main": [
+        [
+          {
+            "node": "Tier A or B?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tier A or B?": {
+      "main": [
+        [
+          {
+            "node": "Find company by domain",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond: skipped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find company by domain": {
+      "main": [
+        [
+          {
+            "node": "Already in HubSpot?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already in HubSpot?": {
+      "main": [
+        [
+          {
+            "node": "Respond: duplicate",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tier A?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tier A?": {
+      "main": [
+        [
+          {
+            "node": "HubSpot: Company (Tier A)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HubSpot: Company (Tier B)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot: Company (Tier A)": {
+      "main": [
+        [
+          {
+            "node": "HubSpot: Deal via API (Tier A)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond: HubSpot error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot: Company (Tier B)": {
+      "main": [
+        [
+          {
+            "node": "Respond: Tier B created",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond: HubSpot error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HubSpot: Deal via API (Tier A)": {
+      "main": [
+        [
+          {
+            "node": "Respond: Tier A created",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond: HubSpot error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": ""
+  },
+  "meta": {
+    "version": "v2-final",
+    "note": "Matches the live n8n workflow (published). Duplicate check by domain. Company create reads from the Clay Webhook node. Tier A deals are created through the HubSpot deals API with name, pipeline, stage, and company association. Credential IDs are placeholders: attach the Header Auth and HubSpot Service Key credentials after import. Employee count is not sent (blank in the source data)."
+  }
+}

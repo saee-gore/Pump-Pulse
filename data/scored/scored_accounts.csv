@@ -1,0 +1,44 @@
+Name,Domain,City,State,Size,Employee Count,Score,Tier,Holdout group,Override reason,Matched keywords,LinkedIn URL
+BillGO,billgo.com,Fort Collins,Colorado,51-200,,11,A,holdout,,payment(+3); payments(+3); receivables(+2); businesses(+1); small businesses(+1); infrastructure(+1),https://www.linkedin.com/company/billgopayments
+Migo,migo.money,San Francisco,California,51-200,,11,A,treatment,,lending(+3); embedded(+2); credit(+2); api(+1); businesses(+1); small businesses(+1); infrastructure(+1),https://www.linkedin.com/company/migomoney
+Banked : (Acquired by National Australia Bank),banked.com,Palo Alto,California,51-200,,10,X,,Acquired by NAB (May 2026); no longer an independent target,payment(+3); payments(+3); fintech(+2); checkout(+2); api(+1); businesses(+1); bank(-2),https://www.linkedin.com/company/banked-limited
+Esusu,esusurent.com,New York,New York,51-200,169,9,A,holdout,,embedded(+2); fintech(+2); financial technology(+2); credit(+2); businesses(+1),https://www.linkedin.com/company/esusu
+Payaza,payaza.africa,New York,New York,51-200,170,6,A,holdout,,payment(+3); fintech(+2); businesses(+1),https://www.linkedin.com/company/payaza-africa
+"Buzz Points, Inc.",linktr.ee/buzzpoints,Austin,Texas,51-200,,3,B,treatment,,credit(+2); businesses(+1),https://www.linkedin.com/company/buzz-points
+Qapital,qapital.com,New York,New York,51-200,53,2,B,treatment,,credit(+2),https://www.linkedin.com/company/qapital
+SavvyMoney,savvymoney.com,Dublin,California,51-200,,2,B,holdout,,credit(+2),https://www.linkedin.com/company/savvymoney
+All Digital Rewards,alldigitalrewards.com,Scottsdale,Arizona,51-200,,2,B,holdout,,embedded(+2),https://www.linkedin.com/company/all-digital-rewards
+Austin Capital Bank,austincapitalbank.com,Austin,Texas,51-200,,1,X,,,credit(+2); businesses(+1); bank(-2),https://www.linkedin.com/company/austin-capital-bank
+Possible,possiblefinance.com,Seattle,Washington,51-200,,0,X,,,,https://www.linkedin.com/company/possible-finance
+8fig,linktr.ee/8figli,North Miami,Florida,51-200,,0,X,,,,https://www.linkedin.com/company/8fig
+Socium Advisors,nm.com,St Louis,Missouri,51-200,,0,X,,,,https://www.linkedin.com/company/sociumadvisors
+Trust Point Inc.,trustpointinc.com,La Crosse,Wisconsin,51-200,,0,X,,,,https://www.linkedin.com/company/trust-point-inc-
+Fort Pitt Capital Group,fortpittcapital.com,Pittsburgh,Pennsylvania,51-200,,0,X,,,,https://www.linkedin.com/company/fort-pitt-capital-group
+The Retirement Planning Group,ceteraplanningpartners.com,Leawood,Kansas,51-200,,0,X,,,,https://www.linkedin.com/company/the-retirement-planning-group
+Microf,microf.com,Roswell,Georgia,51-200,,-1,X,,,payment(+3); heating(-4),https://www.linkedin.com/company/microf
+Qecosystem,qecosystem.com,Houston,Texas,51-200,,-1,B,treatment,Payments company; 'blockchain' is a secondary product line,payments(+3); businesses(+1); blockchain(-5),https://www.linkedin.com/company/emergent-technology
+ezTaxReturn,eztaxreturn.com,Jersey City,New Jersey,51-200,,-2,X,,,tax(-2),https://www.linkedin.com/company/eztaxreturn-com
+Sprintax,sprintax.com,New York,New York,51-200,,-2,B,holdout,"B2B fintech for nonresident tax compliance; 'tax' is the product, not a wealth service",fintech(+2); investors(-2); tax(-2),https://www.linkedin.com/company/sprintax
+Freestone Capital Management,freestonecapital.com,Seattle,Washington,51-200,150,-3,X,,,wealth(-3),https://www.linkedin.com/company/freestone-capital-management
+Lightspeed Financial Services Group,linktr.ee/lightspeedfinancial,Morristown,New Jersey,51-200,,-3,X,,,trading(-3),https://www.linkedin.com/company/lightspeed-financial
+Gainbridge,gainbridge.com,Zionsville,Indiana,51-200,,-4,X,,,insurance(-4),https://www.linkedin.com/company/gainbridge.life
+Jiko,jiko.com,San Francisco,California,51-200,,-4,X,,,api(+1); broker-dealer(-3); bank(-2),https://www.linkedin.com/company/teamjiko
+Simpler Trading,simplertrading.com,Austin,Texas,51-200,,-5,X,,,trading(-3); stocks(-2),https://www.linkedin.com/company/simplertrading
+Swan Bitcoin,swan.com,Calabasas,California,51-200,85,-6,X,,,businesses(+1); bitcoin(-5); tax(-2),https://www.linkedin.com/company/swanbitcoin
+Arta Finance,artafinance.com,Mountain View,California,51-200,107,-6,X,,,financial technology(+2); infrastructure(+1); investment advisor(-3); registered investment(-3); wealth(-3),https://www.linkedin.com/company/arta-finance
+Covr Financial Technologies,covrtech.com,Hartford,Connecticut,51-200,,-6,X,,,embedded(+2); insurance(-4); insurtech(-4),https://www.linkedin.com/company/covr-financial-technologies
+Stirlingshire,stirlingshire.com,New York,New York,51-200,,-6,X,,,investment advisor(-3); registered investment(-3),https://www.linkedin.com/company/stirlingshire
+Alto,altoira.com,Nashville,Tennessee,51-200,,-7,X,,,credit(+2); registered investment(-3); investors(-2); investing(-2); tax(-2),https://www.linkedin.com/company/altoira
+Trilogy Financial,trilogyfs.com,Irvine,California,51-200,,-9,X,,,investment advisor(-3); registered investment(-3); financial planning(-3),https://www.linkedin.com/company/trilogy-financial
+Annex Wealth Management,annexwealth.com,Brookfield,Wisconsin,51-200,,-9,X,,,investment advisor(-3); registered investment(-3); fiduciary(-3),https://www.linkedin.com/company/annexwealthmanagement
+The Trust Co,thetrustco.com,Manhattan,Kansas,51-200,,-9,X,,,wealth(-3); financial planning(-3); fiduciary(-3),https://www.linkedin.com/company/the-trust-co
+Sprinkle,sprinkle.group,New York,New York,51-200,,-9,X,,,blockchain(-5); trading(-3); education(-1),https://www.linkedin.com/company/sprinkle-group
+TradeZero,tradezero.com,Brooklyn,New York,51-200,133,-10,X,,,trading(-3); broker-dealer(-3); stocks(-2); investors(-2),https://www.linkedin.com/company/tradezero
+Musaffa,musaffa.com,New York,New York,51-200,47,-10,X,,,trading(-3); stocks(-2); investors(-2); investing(-2); education(-1),https://www.linkedin.com/company/musaffa
+Diamante,diamante.io,Lenexa,Kansas,51-200,,-10,X,,,crypto(-5); layer 1(-5),https://www.linkedin.com/company/diamante-io
+Stocktwits,stocktwits.com,New York,New York,51-200,80,-11,X,,,social network(-4); trading(-3); investors(-2); investing(-2),https://www.linkedin.com/company/stocktwits
+Folio Investing,folioinvesting.com,McLean,Virginia,51-200,,-12,X,,,broker-dealer(-3); investment advisor(-3); stocks(-2); investing(-2); tax(-2),https://www.linkedin.com/company/foliofn
+AcreTrader,acretrader.com,Fayetteville,Arkansas,51-200,,-14,X,,,insurance(-4); broker dealer(-3); farmland(-3); investors(-2); investing(-2),https://www.linkedin.com/company/acre-trader
+Prometheum,prometheum.com,New York,New York,51-200,,-15,X,,,infrastructure(+1); crypto(-5); tokenized(-5); trading(-3); broker-dealer(-3),https://www.linkedin.com/company/prometheum
+"tZERO Group, Inc.",tzero.com,Jersey City,New Jersey,51-200,58,-17,X,,,blockchain(-5); web3(-5); tokenized(-5); investors(-2),https://www.linkedin.com/company/tzero
+Trajan Wealth LLC,trajanwealth.com,Scottsdale,Arizona,51-200,,-22,X,,,investment advisor(-3); registered investment(-3); wealth(-3); family office(-3); fiduciary(-3); investors(-2); investing(-2); tax(-2); education(-1),https://www.linkedin.com/company/trajan-wealth-llc
